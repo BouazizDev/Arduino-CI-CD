@@ -14,8 +14,17 @@ pipeline {
                 bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
             }
         }
+        stage('Release (master only)') {
+    when {
+        branch 'master'
     }
-
+    steps {
+        echo "Master branch detected → release build"
+        archiveArtifacts artifacts: '.pio/build/**', fingerprint: true
+    }
+}
+    }
+    
     post {
         success {
             echo "BUILD OK on ${env.BRANCH_NAME}"
