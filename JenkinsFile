@@ -12,10 +12,17 @@ pipeline {
         steps {
         ansiColor('xterm') {
             bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
+            }
         }
     }
-}
-
+   stage('Flash Arduino') {
+            when {
+                branch 'master'
+            }
+            steps {
+                bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run --target upload'
+            }
+        }
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: '.pio\\build\\**', fingerprint: true
