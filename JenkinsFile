@@ -8,16 +8,9 @@ pipeline {
             }
         }
 
-        stage('Install PlatformIO') {
-            steps {
-                bat 'pip install --quiet platformio'
-            }
-        }
-
         stage('Build') {
             steps {
-                bbat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
-
+                bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
             }
         }
 
