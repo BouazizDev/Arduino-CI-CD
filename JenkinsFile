@@ -9,10 +9,12 @@ pipeline {
         }
 
         stage('Build') {
-            steps {
-                bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
-            }
+        steps {
+        ansiColor('xterm') {
+            bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
         }
+    }
+}
 
         stage('Archive Artifacts') {
             steps {
