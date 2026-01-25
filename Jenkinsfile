@@ -2,43 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Info') {
             steps {
-                git branch: 'dev', url: 'https://github.com/BouazizDev/Arduino-CI-CD.git'
+                echo "Branch: ${env.BRANCH_NAME}"
+                echo "Commit: ${env.GIT_COMMIT}"
             }
         }
 
         stage('Build') {
-        steps {
-        ansiColor('xterm') {
-            bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
-            }
-        }
-    }
-   stage('Flash Arduino') {
-            when {
-                branch 'master'
-            }
             steps {
-                bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run --target upload'
-            }
-        }
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: '.pio\\build\\**', fingerprint: true
+                bat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
             }
         }
     }
 
     post {
-        always {
-            echo 'Build finished'
-        }
         success {
-            echo 'Build successful!'
+            echo "BUILD OK on ${env.BRANCH_NAME}"
         }
         failure {
-            echo 'Build failed!'
+            echo "BUILD FAILED on ${env.BRANCH_NAME}"
         }
     }
 }
