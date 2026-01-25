@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'dev', url: 'https://github.com/BouazizDev/Arduino-CI-CD.git'
+            }
+        }
+
+        stage('Install PlatformIO') {
+            steps {
+                bat 'pip install --quiet platformio'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bbat '"C:\\Users\\Amine\\.platformio\\penv\\Scripts\\platformio.exe" run'
+
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '.pio\\build\\**', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Build finished'
+        }
+        success {
+            echo 'Build successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
