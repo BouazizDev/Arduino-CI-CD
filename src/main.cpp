@@ -7,7 +7,7 @@ void setup() {
 
 void loop() {
     led_on();
-    delay(200);
+    delay(1000);
     led_off();
-    delay(200);
+    delay(1000);
 }
